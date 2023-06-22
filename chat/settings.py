@@ -87,6 +87,7 @@ DATABASES = {
         'USER': os.getenv('MYSQL_USERNAME', default='root'),
         'PASSWORD': os.getenv('MYSQL_ROOT_PASSWORD', default='1234'),
         'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
         }
     }
 }
@@ -188,3 +189,5 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+AUTH_USER_MODEL  = 'core.CustomUser'
