@@ -8,7 +8,7 @@ function updateUserList() {
     $.getJSON('api/v1/user/', function (data) {
         userList.children('.user').remove();
         for (let i = 0; i < data.length; i++) {
-            const userItem = `<a class="list-group-item user">${data[i]['username']}</a>`;
+            const userItem = `<a id="${data[i]['id']}" class="list-group-item user ${data[i]['status']}">${data[i]['username']}</a>`;
             $(userItem).appendTo('#user-list');
         }
         $('.user').click(function () {
@@ -45,6 +45,14 @@ function getConversation(recipient) {
         messageList.animate({scrollTop: messageList.prop('scrollHeight')});
     });
 
+}
+
+function updateUserStatus(message) {
+    if (message.status == 0) {
+        $(`.user#${message.id}`).removeClass("online")
+    } else {
+        $(`.user#${message.id}`).addClass("online")
+    }
 }
 
 function getMessageById(message) {
@@ -107,14 +115,14 @@ $(document).ready(function () {
 
     socket.onmessage = function (e) {
         let message = JSON.parse(e.data);
-        console.log(message)
         if (message) {
             if (message.type === 'receive_group_message') {
                 getMessageById(message);
+            } else if (message.type === 'user_status') {
+                updateUserStatus(message)
             }
         }
     };
 
 });
-
 

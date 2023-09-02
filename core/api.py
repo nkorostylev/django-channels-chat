@@ -8,6 +8,7 @@ from rest_framework.authentication import SessionAuthentication
 from chat import settings
 from core.serializers import MessageModelSerializer, UserModelSerializer
 from core.models import MessageModel, CustomUser
+# from django_redis import cache
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):

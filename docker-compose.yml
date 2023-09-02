@@ -16,7 +16,7 @@ services:
     image: chat-app
     restart: always
     volumes:
-      - ./:/usr/django-chat
+      - .:/usr/django-chat
     build:
       context: .
       dockerfile: ./Dockerfile

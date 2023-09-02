@@ -1,10 +1,13 @@
 
 from django.shortcuts import get_object_or_404
+from rest_framework import serializers
+
 from core.models import MessageModel, CustomUser
 from rest_framework.serializers import ModelSerializer, CharField
-
+from core.consumers import active_users
 
 class MessageModelSerializer(ModelSerializer):
+
     user = CharField(source='user.username', read_only=True)
     recipient = CharField(source='recipient.username')
 
@@ -22,8 +25,14 @@ class MessageModelSerializer(ModelSerializer):
         model = MessageModel
         fields = ('id', 'user', 'recipient', 'timestamp', 'body')
 
-
 class UserModelSerializer(ModelSerializer):
+
+    status = serializers.SerializerMethodField('get_status')
+
+    def get_status(self, foo):
+        return 'online' if active_users.get("{}".format(foo.id), 0) > 0 else ''
+
     class Meta:
         model = CustomUser
-        fields = ('username',)
+        status = serializers.SerializerMethodField('get_status')
+        fields = ('id', 'username','status')

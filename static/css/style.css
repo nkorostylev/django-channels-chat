@@ -2,6 +2,14 @@
     float: none;
 }
 
+.status.offline {
+    background: gray;
+}
+
+.status.online {
+    background: orange;
+}
+
 .messages {
     position: relative;
     padding: 10px 10px 0 10px;
@@ -98,6 +106,22 @@
 .messages .message .text_wrapper .text {
     font-size: 18px;
     font-weight: 300;
+}
+
+.user::before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: gray;
+  border-radius: 50%;
+  position: absolute;
+  right: 2%;
+  top: 40%;
+}
+
+.user.online::before {
+  background-color: orange;
 }
 
 body {

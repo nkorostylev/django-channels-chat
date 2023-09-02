@@ -36,8 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django_redis',
-
     # Apps
     'core',
 
@@ -192,3 +190,14 @@ CHANNEL_LAYERS = {
 }
 
 AUTH_USER_MODEL  = 'core.CustomUser'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://{}:6379/1".format(os.getenv('REDIS_HOST', default='127.0.0.1')),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
